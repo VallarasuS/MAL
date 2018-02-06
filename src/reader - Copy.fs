@@ -12,12 +12,12 @@
                 match read_list t with
                 | Some (h), t -> read t (h::acc)
                 | None, t 
-                    -> Some(acc) , t
+                    -> Some(Lst(acc)) , t
             | t -> 
                 match read_atom t with
                 | Some(h), t -> read t (h::acc)
                 | None, t 
-                    -> Some(acc |> List.rev) , t
+                    -> Some(acc |> List.rev |> Lst) , t
 
         read ht []
     
@@ -35,17 +35,17 @@
             | CloseParentheses :: t -> Some (Lst(acc)), t
             | t ->
                 match read_form t with
-                | Some(h), t -> read t (h @ acc)
+                | Some(h), t -> read t (h :: acc)
                 | None, t -> read t acc
         
         read ht []
     
     let rec readForms acc ht =
         match ht with 
-        | [] -> List.head acc
+        | [] -> Lst(acc)
         | t ->
             match read_form t with
-            | Some(h), t -> readForms (h @ acc) t 
+            | Some(h), t -> readForms (h :: acc) t 
             | None, t -> readForms acc t
 
     let read_str str =

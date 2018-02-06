@@ -7,11 +7,13 @@
 
   <ItemGroup>
     <Compile Include="types.fs" />
+    <Compile Include="env.fs" />
     <Compile Include="tokenizer.fs" />
     <Compile Include="reader.fs" />
     <Compile Include="printer.fs" />
     <Compile Include="step0_repl.fs" />
     <Compile Include="step1_read_print.fs" />
+    <Compile Include="step2_eval.fs" />
   </ItemGroup>
 
 </Project>

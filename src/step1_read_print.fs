@@ -20,7 +20,7 @@ let rep str =
     |> EVAL ""
     |> PRINT
 
-[<EntryPoint>]
+//[<EntryPoint>]
 let rec main argv =
 
     Console.Write "user>"
