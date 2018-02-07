@@ -14,7 +14,7 @@
         | Lst([]) -> ast
         | Lst(ht) as l -> 
             match eval_ast env l with
-            | Lst(Func(f)::t) -> Number( f t )
+            | Lst(Func(f)::t) -> t |> List.map (fun a -> EVAL env a) |> f |> Number
             | ht -> ht
         | t -> eval_ast env t
 
