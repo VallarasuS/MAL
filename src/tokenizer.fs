@@ -98,7 +98,7 @@
                 | ':' -> accumulateKeyword n
                 | '-' when isDigit str.[n] -> accumulateWhile isDigit Number p n
                 | c when isDigit c -> accumulateWhile isDigit Number p n
-                | c when isTokenChar c -> accumulateWhile isDigit Token p n
+                | c when isTokenChar c -> accumulateWhile isTokenChar Token p n
                 | _ -> failwith "unexpected"
             
         let rec accumulate acc p =

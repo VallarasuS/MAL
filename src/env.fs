@@ -24,7 +24,15 @@
         |> List.map ( fun (k, v) -> k, Func(v))
         |> oflist
 
-    let get (env:Env) k =
-        match env.TryGetValue(k) with
-        | true, v -> Some v
-        | false, _ -> None
+    let rec find (chain:EnvChain) k =
+        match chain with
+        | [] -> None
+        | env :: t -> 
+            match env.TryGetValue(k) with
+            | true, v -> Some v
+            | false, _ -> find t k
+
+    let get chain k = find chain k
+
+    let set (env:Env) k v =
+        env.Add(k,v);

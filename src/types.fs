@@ -14,3 +14,5 @@ type Type =
     | Func of (Type list -> int)
 
  type Env = System.Collections.Generic.Dictionary<string,Type>
+
+ type EnvChain = Env list

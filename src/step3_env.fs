@@ -1,4 +1,4 @@
-﻿module Make.A.Lisp.step2
+﻿module Make.A.Lisp.step3
 
     open Make.A.Lisp.Reader
     open Make.A.Lisp.Printer
@@ -11,6 +11,7 @@
 
     let rec EVAL env ast  =
         match ast with
+        | Lst(Symbol("def!") :: ht) -> defEnv env (Lst ht)
         | Lst([]) -> ast
         | Lst(ht) as l -> 
             match eval_ast env l with
@@ -18,11 +19,25 @@
             | ht -> ht
         | t -> eval_ast env t
 
+    and defEnv env ast =
+        match ast with
+        | Lst([Symbol(k); v])  -> 
+            let res = EVAL env v
+            let h = List.head env
+            Env.set h k res
+            res
+
+        | _ -> failwith "Invalid args"
+
     and eval_ast (env:EnvChain) ast =
         match ast with
         | Lst(Symbol(h)::t)-> 
             match Env.get env h with
             | Some v -> Lst(v::t) 
+            | None -> failwith "not found"
+        | Symbol(h) -> 
+            match Env.get env h with
+            | Some v -> v
             | None -> failwith "not found"
         | Lst(h) -> Lst( h |> List.map (fun a -> EVAL env a))
 
@@ -37,7 +52,7 @@
         |> EVAL [Env.defaultEnv]
         |> PRINT
 
-    //[<EntryPoint>]
+    [<EntryPoint>]
     let rec main argv =
 
         Console.WriteLine();
