@@ -36,3 +36,8 @@
 
     let set (env:Env) k v =
         env.Add(k,v);
+
+    let makeNew outer s n =
+        makeEnv() :: outer
+
+

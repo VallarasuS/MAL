@@ -1,17 +1,26 @@
 ﻿module Make.A.Lisp.step3
 
+    open System
+
     open Make.A.Lisp.Reader
     open Make.A.Lisp.Printer
     open Make.A.Lisp.Types
-
-    open System
+    open Make.A.Lisp.Env
 
     let READ input =
         read_str input
 
+    let rec iterPair f bindings =
+        match bindings with
+        |  Lst(h::t) -> 
+            f h |> ignore
+            iterPair f (Lst t)
+        | _ -> []
+
     let rec EVAL env ast  =
         match ast with
         | Lst(Symbol("def!") :: ht) -> defEnv env (Lst ht)
+        | Lst(Symbol("let*") :: ht ) -> letStar env (Lst ht)
         | Lst([]) -> ast
         | Lst(ht) as l -> 
             match eval_ast env l with
@@ -28,6 +37,17 @@
             res
 
         | _ -> failwith "Invalid args"
+    
+    and letStar env ast =
+        match ast with
+        | Lst([bindings;form]) -> 
+            let newEnv = makeNew env [] []
+            let binder = defEnv newEnv 
+            match bindings with
+            | Lst([_;_]) -> iterPair binder bindings |> ignore
+            | _ -> failwith "Wrong arity?"
+            EVAL newEnv form
+        | _ -> failwith "unexpected"
 
     and eval_ast (env:EnvChain) ast =
         match ast with
