@@ -15,6 +15,11 @@
     <Compile Include="step1_read_print.fs" />
     <Compile Include="step2_eval.fs" />
     <Compile Include="step3_env.fs" />
+    <Compile Include="step4_if_fn_do.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="tests.fsx" />
   </ItemGroup>
 
 </Project>

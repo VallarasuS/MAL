@@ -1,4 +1,4 @@
-﻿module Make.A.Lisp.step3
+﻿module Make.A.Lisp.step4
 
     open System
 
@@ -72,7 +72,7 @@
         |> EVAL [Env.defaultEnv]
         |> PRINT
 
-    //[<EntryPoint>]
+    [<EntryPoint>]
     let rec main argv =
 
         Console.WriteLine();
