@@ -9,6 +9,7 @@ type Type =
     | String of string
     | Number of int
     | Symbol of string
+    | Bool of bool
     | Undefined of string
     | Lst of Type list
     | Func of (Type list -> int)
@@ -21,7 +22,8 @@ type Type =
 
  let inline (|Pair|_|) t =
     match t with
-    | Lst(f::s::t) -> Some (Lst([f;s]), Lst(t))
+    | Lst(Lst([f;s])::t) -> Some (Lst([f;s]), Lst(t))
+    | Lst([f;s]) -> Some (Lst([f;s]), Lst([]))
     | Lst([]) -> None
     | Lst(_) -> failwith "invalid no of args"
     | _ -> None

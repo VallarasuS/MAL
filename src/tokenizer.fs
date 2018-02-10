@@ -3,7 +3,7 @@
     open System
 
     type Token =
-        | Eof
+        | Nil
         | OpenParentheses | CloseParentheses
         | OpenBracket | CloseBracket
         | OpenBrace | CloseBrace
@@ -78,7 +78,7 @@
         let rec gettoken p = 
         
             if (p >= len) then
-                Eof, p
+                Nil, p
             else
                 let n = p + 1
                 match str.[p] with
@@ -103,7 +103,7 @@
             
         let rec accumulate acc p =
              match gettoken p with
-             | Eof, p -> List.rev acc
+             | Nil, p -> List.rev acc
              | t, p -> accumulate (t::acc) p
 
         accumulate [] 0

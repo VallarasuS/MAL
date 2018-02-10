@@ -15,11 +15,11 @@ open Make.A.Lisp.step4
 let test arg =
     rep arg
 
-test "(+ 1 2)"
-test "(+ 1 (+ 1 1))"
+test "(+ 1 0)"
+test "(+ 1 (+ 0 1))"
 
-test "(def! b 6)"
+test "(def! b 3)"
 
-test "(let* (c 2) c)"
+test "(let* (c 4) c)"
 
-test "(let* ((c 2)(d 3)) d)"
+test "(let* ((c 2)(d 5)) d)"

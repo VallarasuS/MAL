@@ -23,6 +23,9 @@
     
     and read_atom ht =
         match ht with
+        | Token.Token("nil") :: t -> Some(Type.Nil),t
+        | Token.Token("true") :: t -> Some(Type.Bool(true)),t
+        | Token.Token("false") :: t -> Some(Type.Bool(false)),t
         | Token.String s ::t -> Some(Types.String(s)),t
         | Token.Number n::t -> Some(Type.Number(n |> int)), t 
         | Token.Token s :: t -> Some(Type.Symbol(s)),t
