@@ -37,7 +37,24 @@
     let set (env:Env) k v =
         env.Add(k,v);
 
-    let makeNew outer s n =
-        makeEnv() :: outer
+    let makeNew outer symbols nodes =
+      let envc =  makeEnv() :: outer
+      let env = List.head envc
+
+      let rec loop symbols nodes =
+        match symbols, nodes with
+        | [Symbol("&"); Symbol(s)], nodes ->
+            set env s (Lst nodes)
+            envc
+        | Symbol(s):: symbols, n::nodes ->
+            set env s n 
+            loop symbols nodes
+        | [], [] -> envc
+        | _ -> failwith "unexpected"
+
+      loop symbols nodes 
+
+
+
 
 

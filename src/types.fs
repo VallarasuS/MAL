@@ -13,6 +13,7 @@ type Type =
     | Undefined of string
     | Lst of Type list
     | Func of (Type list -> int)
+    | Fun  of (Type list -> Type)
 
  type Env = System.Collections.Generic.Dictionary<string,Type>
 

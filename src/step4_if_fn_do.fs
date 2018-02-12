@@ -6,6 +6,8 @@
     open Make.A.Lisp.Printer
     open Make.A.Lisp.Types
     open Make.A.Lisp.Env
+    open System.Diagnostics
+    open System.Xml
 
     let READ input =
         read_str input
@@ -21,12 +23,46 @@
         match ast with
         | Lst(Symbol("def!") :: ht) -> defEnv env (Lst ht)
         | Lst(Symbol("let*") :: ht ) -> letStar env (Lst ht)
+        | Lst(Symbol("do") :: ht ) -> doForm env (Lst ht)
+        | Lst(Symbol("if") :: ht ) -> ifForm env (Lst ht)
+        | Lst(Symbol("fun*") :: ht ) -> funStar env (Lst ht)
         | Lst([]) -> ast
-        | Lst(ht) as l -> 
-            match eval_ast env l with
+        | Lst(ht) as l -> evalFun env l
+        | t -> eval_ast env t
+
+    and funStar outer ast =
+        let makefn binds body =
+            let fn = fun nodes -> 
+                let inner = Env.makeNew outer binds nodes
+                EVAL inner body
+            Fun(fn)
+            
+        match ast with
+        | Lst([binds;body]) -> makefn [binds] body
+        | _  -> failwith "un expected arity"
+
+    and ifForm env ast = 
+        match ast with
+        |Lst([condform; trueform; falseform]) -> ifForm3 env condform trueform falseform
+        |Lst([condform; trueform]) -> ifForm3 env condform trueform Nil
+        | _ -> failwith "unexpected form"
+
+    and ifForm3 env condform trueform falseform  =
+        match EVAL env condform with
+        | Bool(false) | Nil -> EVAL env falseform
+        | _ -> EVAL env trueform
+
+    and doForm env ast =
+        match ast with 
+        | Lst(h::t) -> 
+            EVAL env h|> ignore
+            doForm env (Lst t)
+        | t -> EVAL env t
+
+    and evalFun env ast =
+         match eval_ast env ast with
             | Lst(Func(f)::t) -> t |> List.map (fun a -> EVAL env a) |> f |> Number
             | ht -> ht
-        | t -> eval_ast env t
 
     and defEnv env ast =
         match ast with

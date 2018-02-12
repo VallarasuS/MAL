@@ -10,6 +10,9 @@ let rec print_str ast =
         | String s -> Console.Write s
         | Number n -> Console.Write n
         | Symbol s -> Console.Write s
+        | Bool b -> Console.Write b
+        | Nil -> Console.Write "nil"
+        | Func f -> Console.Write "#<fun>"
         | l -> print_str l
         Console.Write  " "
         print_str (Lst(t))
@@ -18,5 +21,8 @@ let rec print_str ast =
         | String s -> Console.Write s
         | Number n -> Console.Write n
         | Symbol s -> Console.Write s
+        | Bool b -> Console.Write b
+        | Nil -> Console.Write "nil"
+        | Func f -> Console.Write "#<fun>"
         | l -> print_str l
         Console.Write  " "
