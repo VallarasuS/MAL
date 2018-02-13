@@ -13,6 +13,11 @@
                 | Some (h), t -> read t (h::acc)
                 | None, t 
                     -> Some(acc) , t
+            | OpenBracket :: t ->
+                match read_vector t with
+                | Some (h), t -> read t (h::acc)
+                | None, t 
+                    -> Some(acc), t
             | t -> 
                 match read_atom t with
                 | Some(h), t -> read t (h::acc)
@@ -43,6 +48,18 @@
         
         read ht []
     
+    and read_vector ht : Type Option * Token list =
+        let rec read l acc =
+            match l with
+            | [] -> failwith "expected ]"
+            | CloseBracket :: t -> Some(Lst(acc)), t
+            | t -> 
+                match read_form t with
+                | Some(h), t -> read t (h @ acc)
+                | None, t -> read t acc
+        
+        read ht []
+
     let rec readForms acc ht =
         match ht with 
         | [] -> List.head acc

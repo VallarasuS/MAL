@@ -25,7 +25,7 @@
         | Lst(Symbol("let*") :: ht ) -> letStar env (Lst ht)
         | Lst(Symbol("do") :: ht ) -> doForm env (Lst ht)
         | Lst(Symbol("if") :: ht ) -> ifForm env (Lst ht)
-        | Lst(Symbol("fun*") :: ht ) -> funStar env (Lst ht)
+        | Lst(Symbol("fn*") :: ht ) -> funStar env (Lst ht)
         | Lst([]) -> ast
         | Lst(ht) as l -> evalFun env l
         | t -> eval_ast env t

@@ -12,6 +12,7 @@ type Type =
     | Bool of bool
     | Undefined of string
     | Lst of Type list
+    | Vector of Type array
     | Func of (Type list -> int)
     | Fun  of (Type list -> Type)
 
