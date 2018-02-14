@@ -16,6 +16,7 @@ let test arg =
     rep arg
 
 test "(+ 1 0)"
+
 test "(+ 1 (+ 0 1))"
 
 test "(def! b 3)"
@@ -26,6 +27,6 @@ test "(let* ((c 2)(d 5)) d)"
 
 test "( (fn* [a] a) 6)"
 
-test "( (fn* [a] (+ a 1)) 7)"
+test "( (fn* [a] (+ a 1)) 6)"
 
 test "( (fn* [a b] (+ a b)) 3 5)"
