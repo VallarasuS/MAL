@@ -24,7 +24,7 @@
         | Lst([]) -> ast
         | Lst(ht) as l -> 
             match eval_ast env l with
-            | Lst(Func(f)::t) -> t |> List.map (fun a -> EVAL env a) |> f |> Number
+            | Lst(Func(f)::t) -> t |> List.map (fun a -> EVAL env a) |> Lst |> f
             | ht -> ht
         | t -> eval_ast env t
 
@@ -41,7 +41,7 @@
     and letStar env ast =
         match ast with
         | Lst([bindings;form]) -> 
-            let newEnv = makeNew env [] []
+            let newEnv = makeNew env (Lst []) (Lst [])
             let binder = defEnv newEnv 
             match bindings with
             | Lst([_;_]) -> iterPair binder bindings |> ignore

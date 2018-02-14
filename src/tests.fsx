@@ -23,3 +23,9 @@ test "(def! b 3)"
 test "(let* (c 4) c)"
 
 test "(let* ((c 2)(d 5)) d)"
+
+test "( (fn* [a] a) 6)"
+
+test "( (fn* [a] (+ a 1)) 7)"
+
+test "( (fn* [a b] (+ a b)) 3 5)"

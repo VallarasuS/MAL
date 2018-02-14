@@ -35,10 +35,10 @@
             let fn = fun nodes -> 
                 let inner = Env.makeNew outer binds nodes
                 EVAL inner body
-            Fun(fn)
+            Func(fn)
             
         match ast with
-        | Lst([binds;body]) -> makefn [binds] body
+        | Lst([binds;body]) -> makefn binds (Lst [body])
         | _  -> failwith "un expected arity"
 
     and ifForm env ast = 
@@ -61,7 +61,7 @@
 
     and evalFun env ast =
          match eval_ast env ast with
-            | Lst(Func(f)::t) -> t |> List.map (fun a -> EVAL env a) |> f |> Number
+            | Lst(Func(f)::t) -> t |> List.map (fun a -> EVAL env a) |> Lst |> f
             | ht -> ht
 
     and defEnv env ast =
@@ -77,7 +77,7 @@
     and letStar env ast =
         match ast with
         | Lst([bindings;form]) -> 
-            let newEnv = makeNew env [] []
+            let newEnv = makeNew env (Lst []) (Lst [])
             let binder = defEnv newEnv 
             match bindings with
             | Lst([_;_]) -> iterPair binder bindings |> ignore

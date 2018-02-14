@@ -13,8 +13,7 @@ type Type =
     | Undefined of string
     | Lst of Type list
     | Vector of Type array
-    | Func of (Type list -> int)
-    | Fun  of (Type list -> Type)
+    | Func of (Type -> Type)
 
  type Env = System.Collections.Generic.Dictionary<string,Type>
 

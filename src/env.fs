@@ -9,9 +9,9 @@
         let accumulate (e:Env) (k, v) = e.Add(k,v); e
         List.fold accumulate env lst
 
-    let apply f ast =
+    let rec apply f ast =
         match ast with
-        | [Number(a); Number(b)] -> f (a |> int) (b |> int)
+        | Lst([Number(a); Number(b)]) -> f (a |> int) (b |> int) |> Number
         | _ -> failwith "Invalid Operation"
 
     let defaultEnv = 
@@ -43,13 +43,13 @@
 
       let rec loop symbols nodes =
         match symbols, nodes with
-        | [Symbol("&"); Symbol(s)], nodes ->
-            set env s (Lst nodes)
+        | Lst([Symbol("&"); Symbol(s)]), nodes ->
+            set env s nodes
             envc
-        | Symbol(s):: symbols, n::nodes ->
+        | Lst(Symbol(s):: symbols), Lst (n::nodes) ->
             set env s n 
-            loop symbols nodes
-        | [], [] -> envc
+            loop (Lst symbols) (Lst nodes)
+        | Lst [], Lst [] -> envc
         | _ -> failwith "unexpected"
 
       loop symbols nodes 
