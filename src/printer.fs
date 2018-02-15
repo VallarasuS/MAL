@@ -10,7 +10,8 @@ let rec print_str ast =
         | String s -> Console.Write s
         | Number n -> Console.Write n
         | Symbol s -> Console.Write s
-        | Bool b -> Console.Write b
+        | True -> Console.Write "true"
+        | False -> Console.Write "false"
         | Nil -> Console.Write "nil"
         | Func f -> Console.Write "#<fun>"
         | l -> print_str l
@@ -23,7 +24,8 @@ let rec print_str ast =
         | String s -> Console.Write s
         | Number n -> Console.Write n
         | Symbol s -> Console.Write s
-        | Bool b -> Console.Write b
+        | True -> Console.Write "true"
+        | False -> Console.Write "false"
         | Nil -> Console.Write "nil"
         | Func f -> Console.Write "#<fun>"
         | l -> print_str l

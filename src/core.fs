@@ -15,3 +15,10 @@
     let multiply = apply (fun a b -> a * b)
 
     let divide = apply(fun a b -> a / b)
+
+    let list = Lst
+
+    let isList = function
+        | Lst [_] ->  Type.True
+        | Lst [] -> Type.False
+        | _ -> Type.False

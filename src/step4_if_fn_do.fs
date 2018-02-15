@@ -47,7 +47,7 @@
 
     and ifForm3 env condform trueform falseform  =
         match EVAL env condform with
-        | Bool(false) | Nil -> EVAL env falseform
+        | Type.False | Nil -> EVAL env falseform
         | _ -> EVAL env trueform
 
     and doForm env ast =

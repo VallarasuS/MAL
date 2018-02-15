@@ -4,12 +4,11 @@ open System
 
 type Type =
     | Nil
-    | Ture
+    | True
     | False
     | String of string
     | Number of int
     | Symbol of string
-    | Bool of bool
     | Undefined of string
     | Lst of Type list
     | Vector of Type array
