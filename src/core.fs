@@ -22,3 +22,18 @@
         | Lst [_] ->  Type.True
         | Lst [] -> Type.False
         | _ -> Type.False
+
+    let isEmpty = function
+        | Lst (h::t) -> 
+            isList h
+        | _ -> Type.False
+
+    let count = function
+        | Lst(h::t) -> 
+            match h with 
+            | Lst(i) -> List.length i
+            | _ -> 0
+        | _ -> 0
+
+    let equal = failwith "TODO"
+        
