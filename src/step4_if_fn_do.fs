@@ -6,8 +6,6 @@
     open Make.A.Lisp.Printer
     open Make.A.Lisp.Types
     open Make.A.Lisp.Env
-    open System.Diagnostics
-    open System.Xml
 
     let READ input =
         read_str input

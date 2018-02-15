@@ -1,4 +1,5 @@
 ﻿#load "types.fs"
+#load "core.fs"
 #load "tokenizer.fs"
 #load "reader.fs"
 #load "printer.fs"
@@ -30,3 +31,5 @@ test "( (fn* [a] a) 6)"
 test "( (fn* [a] (+ a 1)) 6)"
 
 test "( (fn* [a b] (+ a b)) 3 5)"
+
+test "( (fn* [a b] (* a b)) 3 3)"

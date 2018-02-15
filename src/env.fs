@@ -1,6 +1,7 @@
 ﻿module Make.A.Lisp.Env
 
     open Types
+    open Make.A.Lisp.Core
 
     let makeEnv () = Env();
 
@@ -9,19 +10,14 @@
         let accumulate (e:Env) (k, v) = e.Add(k,v); e
         List.fold accumulate env lst
 
-    let rec apply f ast =
-        match ast with
-        | Lst([Number(a); Number(b)]) -> f (a |> int) (b |> int) |> Number
-        | _ -> failwith "Invalid Operation"
-
     let defaultEnv = 
         [
-        "+", apply (fun a b -> a + b);
-        "-", apply (fun a b -> a - b);
-        "*", apply (fun a b -> a * b);
-        "/", apply (fun a b -> a / b);
+            "+", Core.add
+            "-", Core.subtract
+            "*", Core.multiply
+            "/", Core.divide
         ]
-        |> List.map ( fun (k, v) -> k, Func(v))
+        |> List.map (fun (k, v) -> k, Func(v))
         |> oflist
 
     let rec find (chain:EnvChain) k =
